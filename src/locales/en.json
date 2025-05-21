@@ -1261,6 +1261,8 @@
   },
 
   "PLACEHOLDERS": {
+    "estate_type": "Property Type",
+  "subscribers": "Subscriptions",
     "states": "Areas",
     "manage_states": "Areas Management",
     "manage_cities": "Cities Management",

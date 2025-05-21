@@ -2,7 +2,7 @@
   <div class="crud_form_wrapper">
     <!-- Start:: Title -->
     <div class="form_title_wrapper">
-      <h4>{{ $t("TITLES.addPackage") }}</h4>
+      <h4>{{ $t("PLACEHOLDERS.add_type") }}</h4>
     </div>
     <div class="col-12 text-end">
       <v-btn @click="$router.go(-1)" style="color: #008274">
@@ -26,7 +26,7 @@
           <!-- End:: Color Input -->
 
           <!-- Start:: Name Input -->
-          <base-input
+           <base-input
             col="6"
             type="text"
             :placeholder="$t('PLACEHOLDERS.nameAr')"
@@ -40,75 +40,16 @@
             v-model.trim="data.name_en"
             required
           />
-          <!-- End:: Name Input -->
-
-          <base-input
-            col="6"
-            type="textarea"
-            :placeholder="$t('PLACEHOLDERS.descAr')"
-            v-model.trim="data.descAr"
-            required
-          />
-          <base-input
-            col="6"
-            type="textarea"
-            :placeholder="$t('PLACEHOLDERS.descEn')"
-            v-model.trim="data.descEn"
-            required
-          />
-
-          <!-- Start:: Number of Available Auctions -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.price')"
-            v-model.number="data.price"
-            min="1"
-            required
-          />
-          <!-- End:: Number of Available Auctions -->
 
           <!-- Start:: Number of Available Bids -->
           <base-select-input
             col="6"
-            :optionsList="types"
-            :placeholder="$t('PLACEHOLDERS.estate_type')"
-            v-model="data.type"
+            :optionsList="estateUses"
+            :placeholder="$t('PLACEHOLDERS.estate_use')"
+            v-model="data.estate_use"
             required
           />
           <!-- End:: Number of Available Bids -->
-
-          <!-- Start:: Auction Order -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.price_after_discount')"
-            v-model.number="data.price_after_discount"
-            min="1"
-          />
-          <!-- End:: Auction Order -->
-
-          <!-- Start:: Price Input -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.number_of_available_bids')"
-            v-model.number="data.number_of_available_bids"
-            min="1"
-            required
-          />
-          <!-- End:: Price Input -->
-
-          <!-- Start:: Price After Discount Input -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.package_duration')"
-            v-model.number="data.package_duration"
-            min="0"
-            required
-          />
-          <!-- End:: Price After Discount Input -->
 
           <!-- Start:: Status Dropdown -->
           <base-select-input
@@ -153,6 +94,7 @@ export default {
         descEn: null,
         price: null,
         type: null,
+        estate_use: null,
         price_after_discount: null,
         number_of_available_bids: null,
         package_duration: null,
@@ -161,6 +103,18 @@ export default {
       statusOptions: [
         { id: 1, name: this.$t("STATUS.active"), value: 1 },
         { id: 0, name: this.$t("STATUS.notActive"), value: 0 },
+      ],
+      estateUses: [
+        {
+          id: 1,
+          name: this.$t("PLACEHOLDERS.commercial"),
+          value: "commercial",
+        },
+        {
+          id: 2,
+          name: this.$t("PLACEHOLDERS.residential"),
+          value: "residential",
+        },
       ],
     };
   },
@@ -184,29 +138,19 @@ export default {
       const REQUEST_DATA = new FormData();
       REQUEST_DATA.append("name[ar]", this.data.name_ar);
       REQUEST_DATA.append("name[en]", this.data.name_en);
-      REQUEST_DATA.append("description[ar]", this.data.descAr);
-      REQUEST_DATA.append("description[en]", this.data.descEn);
-      REQUEST_DATA.append("price", this.data.price);
-      REQUEST_DATA.append("estate_type_id", this.data.type?.id);
-      REQUEST_DATA.append(
-        "price_after_discount",
-        this.data.price_after_discount
-      );
-      REQUEST_DATA.append("ads_number", this.data.number_of_available_bids);
-
-      REQUEST_DATA.append("duration", this.data.package_duration);
+      REQUEST_DATA.append("type", this.data.estate_use?.value);
 
       REQUEST_DATA.append("is_active", this.data.is_active?.value);
 
       try {
         await this.$axios({
           method: "POST",
-          url: "packages",
+          url: "estate-types",
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;
         this.$message.success(this.$t("MESSAGES.addedSuccessfully"));
-        this.$router.push({ path: "/packages/all" });
+        this.$router.push({ path: "/estate_types/all" });
       } catch (error) {
         this.isWaitingRequest = false;
         this.$message.error(error.response.data.message);
@@ -214,7 +158,7 @@ export default {
     },
   },
   created() {
-    this.getTypes();
+    // this.getTypes();
   },
 };
 </script>

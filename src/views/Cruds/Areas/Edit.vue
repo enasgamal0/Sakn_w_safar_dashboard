@@ -196,7 +196,7 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `areas/${this.$route.params?.id}`,
+          url: `areas/${this.$route?.id}`,
         });
         this.data.name_ar = res.data.data.Area.name_ar;
         this.data.name_en = res.data.data.Area.name_en;

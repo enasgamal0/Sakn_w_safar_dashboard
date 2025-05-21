@@ -832,7 +832,7 @@
       <!-- End:: banks Route -->
 
       <!-- Start:: packages Route -->
-      <!-- <div
+      <div
         class="home_route"
         @click="$emit('fireToggleNavDrawerEmit')"
         v-if="$can('packages index', 'packages')"
@@ -850,7 +850,26 @@
             {{ $t("PLACEHOLDERS.package_management") }}
           </span>
         </router-link>
-      </div> -->
+      </div>
+      <div
+        class="home_route"
+        @click="$emit('fireToggleNavDrawerEmit')"
+        v-if="true"
+      >
+        <router-link to="/estate_types/all">
+          <span class="route_icon">
+            <img
+              src="@/assets/media/icons/ui_icons/office_building.png"
+              alt="icon"
+              width="40"
+              height="40"
+            />
+          </span>
+          <span class="route_text">
+            {{ $t("PLACEHOLDERS.estate_types") }}
+          </span>
+        </router-link>
+      </div>
       <!-- End:: packages Route -->
 
       <!-- Start:: auctions Route -->
