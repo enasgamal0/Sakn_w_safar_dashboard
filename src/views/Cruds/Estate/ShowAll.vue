@@ -22,16 +22,22 @@
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
               <base-input
-                col="5"
+                col="4"
                 type="text"
-                :placeholder="$t('PLACEHOLDERS.name')"
+                :placeholder="$t('PLACEHOLDERS.estate_type')"
                 v-model.trim="filterOptions.name"
               />
               <!-- End:: Name Input -->
 
               <!-- Start:: Status Input -->
               <base-select-input
-                col="5"
+                col="4"
+                :optionsList="estateUses"
+                :placeholder="$t('PLACEHOLDERS.estate_use')"
+                v-model="filterOptions.estate_use"
+              />
+              <base-select-input
+                col="4"
                 :optionsList="activeStatuses"
                 :placeholder="$t('PLACEHOLDERS.status')"
                 v-model="filterOptions.is_active"
@@ -60,7 +66,7 @@
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("PLACEHOLDERS.packages") }}</h5>
+          <h5>{{ $t("PLACEHOLDERS.estate_types") }}</h5>
           <button
             v-if="!filterFormIsActive"
             class="filter_toggler"
@@ -74,8 +80,8 @@
           class="title_route_wrapper"
           v-if="$can('packages create', 'packages')"
         >
-          <router-link to="/packages/create">
-            {{ $t("TITLES.addPackage") }}
+          <router-link to="/estate_types/create">
+            {{ $t("PLACEHOLDERS.add_type") }}
           </router-link>
         </div>
       </div>
@@ -163,14 +169,6 @@
               class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"
               ></i>
             </template>
-            <a-tooltip placement="bottom">
-              <template slot="title">
-                <span>{{ $t("PLACEHOLDERS.subscribers") }}</span>
-              </template>
-              <button class="btn_show" @click="showSubscribers(item)">
-                <i class="fas fa-money-bill-wave"></i>
-              </button>
-            </a-tooltip>
           </div>
         </template>
         <!-- End:: Actions -->
@@ -274,6 +272,20 @@ export default {
         },
       ];
     },
+    estateUses() {
+      return [
+        {
+          id: 1,
+          name: this.$t("PLACEHOLDERS.commercial"),
+          value: "commercial",
+        },
+        {
+          id: 2,
+          name: this.$t("PLACEHOLDERS.residential"),
+          value: "residential",
+        },
+      ];
+    },
   },
 
   data() {
@@ -287,6 +299,7 @@ export default {
       filterFormIsActive: false,
       filterOptions: {
         name: null,
+        estate_use: null,
         is_active: null,
       },
       // End:: Filter Data
@@ -301,44 +314,14 @@ export default {
           sortable: false,
         },
         {
-          text: this.$t("PLACEHOLDERS.name"),
+          text: this.$t("PLACEHOLDERS.estate_type"),
           value: "name",
           sortable: false,
           align: "center",
         },
         {
-          text: this.$t("PLACEHOLDERS.number_of_available_bids"),
-          value: "ads_number",
-          sortable: false,
-          align: "center",
-        },
-        // {
-        //   text: this.$t("PLACEHOLDERS.number_of_available_auctions"),
-        //   value: "number_of_available_bids",
-        //   sortable: false,
-        //   align: "center",
-        // },
-        // {
-        //   text: this.$t("PLACEHOLDERS.auction_order"),
-        //   value: "auction_order",
-        //   sortable: false,
-        //   align: "center",
-        // },
-        {
-          text: this.$t("PLACEHOLDERS.price"),
-          value: "price",
-          sortable: false,
-          align: "center",
-        },
-        {
-          text: this.$t("PLACEHOLDERS.package_duration"),
-          value: "duration",
-          sortable: false,
-          align: "center",
-        },
-        {
-          text: this.$t("PLACEHOLDERS.package_count_users"),
-          value: "number_of_subscribes",
+          text: this.$t("PLACEHOLDERS.estate_use"),
+          value: "type",
           sortable: false,
           align: "center",
         },
@@ -399,16 +382,17 @@ export default {
     // Start:: Handel Filter
     async submitFilterForm() {
       if (this.$route.query.page !== "1") {
-        await this.$router.push({ path: "/packages/all", query: { page: 1 } });
+        await this.$router.push({ path: "/estate_types/all", query: { page: 1 } });
       }
       this.setTableRows();
     },
     async resetFilter() {
       this.filterOptions.name = null;
+      this.filterOptions.estate_use = null;
       this.filterOptions.is_active = null;
 
       if (this.$route.query.page !== "1") {
-        await this.$router.push({ path: "/packages/all", query: { page: 1 } });
+        await this.$router.push({ path: "/estate_types/all", query: { page: 1 } });
       }
       this.setTableRows();
     },
@@ -433,11 +417,12 @@ export default {
         const params = {
           page: this.paginations.current_page,
           name: this.filterOptions.name,
+          type: this.filterOptions.estate_use?.value,
           status: this.filterOptions.is_active?.value,
         };
         let res = await this.$axios({
           method: "GET",
-          url: "packages",
+          url: "estate-types",
           params: params,
         });
 
@@ -471,7 +456,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `packages/activate/${item.id}`,
+          url: `estate-types/activate/${item.id}`,
           data: REQUEST_DATA,
         });
         this.setTableRows();
@@ -485,14 +470,12 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: End
     editItem(item) {
-      this.$router.push({ path: `/packages/edit/${item.id}` });
+      this.$router.push({ path: `/estate_types/edit/${item.id}` });
     },
     showItem(item) {
-      this.$router.push({ path: `/packages/show/${item.id}` });
+      this.$router.push({ path: `/estate_types/show/${item.id}` });
     },
-    showSubscribers(item) {
-      this.$router.push({ path: `/packages/sub/${item.id}` });
-    },
+
     // ===== End:: End
 
     // ===== Start:: Delete
@@ -505,7 +488,7 @@ export default {
       try {
         await this.$axios({
           method: "DELETE",
-          url: `packages/${this.itemToDelete.id}`,
+          url: `estate-types/${this.itemToDelete.id}`,
         });
         this.dialogDelete = false;
         this.setTableRows();

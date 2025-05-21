@@ -3,64 +3,12 @@
     <!-- Start:: Main Section -->
     <main>
       <!--  =========== Start:: Filter Form =========== -->
-      <div
-        class="filter_content_wrapper"
-        :class="{ active: filterFormIsActive }"
-      >
-        <button
-          class="filter_toggler"
-          @click="filterFormIsActive = !filterFormIsActive"
-        >
-          <i class="fal fa-times"></i>
-        </button>
-        <div class="filter_title_wrapper">
-          <h5>{{ $t("TITLES.searchBy") }}</h5>
-        </div>
-
-        <div class="filter_form_wrapper">
-          <form @submit.prevent="submitFilterForm">
-            <div class="row justify-content-center align-items-center w-100">
-              <!-- Start:: Name Input -->
-              <base-input
-                col="5"
-                type="text"
-                :placeholder="$t('PLACEHOLDERS.name')"
-                v-model.trim="filterOptions.name"
-              />
-              <!-- End:: Name Input -->
-
-              <!-- Start:: Status Input -->
-              <base-select-input
-                col="5"
-                :optionsList="activeStatuses"
-                :placeholder="$t('PLACEHOLDERS.status')"
-                v-model="filterOptions.is_active"
-              />
-              <!-- End:: Status Input -->
-            </div>
-
-            <div class="btns_wrapper">
-              <button class="submit_btn" :disabled="isWaitingRequest">
-                <i class="fal fa-search"></i>
-              </button>
-              <button
-                class="reset_btn"
-                type="button"
-                :disabled="isWaitingRequest"
-                @click="resetFilter"
-              >
-                <i class="fal fa-redo"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
       <!--  =========== End:: Filter Form =========== -->
 
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("PLACEHOLDERS.packages") }}</h5>
+          <h5>{{ $t("PLACEHOLDERS.subscribers") }}</h5>
           <button
             v-if="!filterFormIsActive"
             class="filter_toggler"
@@ -70,14 +18,7 @@
           </button>
         </div>
 
-        <div
-          class="title_route_wrapper"
-          v-if="$can('packages create', 'packages')"
-        >
-          <router-link to="/packages/create">
-            {{ $t("TITLES.addPackage") }}
-          </router-link>
-        </div>
+      
       </div>
       <!--  =========== End:: Table Title =========== -->
 
@@ -157,20 +98,12 @@
                 <i class="fal fa-eye"></i>
               </button>
             </a-tooltip>
-            
+
             <template v-else>
               <i
-              class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"
+                class="fal fa-lock-alt fs-5 blue-grey--text text--darken-1"
               ></i>
             </template>
-            <a-tooltip placement="bottom">
-              <template slot="title">
-                <span>{{ $t("PLACEHOLDERS.subscribers") }}</span>
-              </template>
-              <button class="btn_show" @click="showSubscribers(item)">
-                <i class="fas fa-money-bill-wave"></i>
-              </button>
-            </a-tooltip>
           </div>
         </template>
         <!-- End:: Actions -->
@@ -404,8 +337,8 @@ export default {
       this.setTableRows();
     },
     async resetFilter() {
-      this.filterOptions.name = null;
-      this.filterOptions.is_active = null;
+      // this.filterOptions.name = null;
+      // this.filterOptions.is_active = null;
 
       if (this.$route.query.page !== "1") {
         await this.$router.push({ path: "/packages/all", query: { page: 1 } });
@@ -432,12 +365,10 @@ export default {
       try {
         const params = {
           page: this.paginations.current_page,
-          name: this.filterOptions.name,
-          status: this.filterOptions.is_active?.value,
         };
         let res = await this.$axios({
           method: "GET",
-          url: "packages",
+          url: `packages/subscribers/${$this.$route.params?.id}`,
           params: params,
         });
 
@@ -490,9 +421,6 @@ export default {
     showItem(item) {
       this.$router.push({ path: `/packages/show/${item.id}` });
     },
-    showSubscribers(item) {
-      this.$router.push({ path: `/packages/sub/${item.id}` });
-    },
     // ===== End:: End
 
     // ===== Start:: Delete
@@ -521,13 +449,13 @@ export default {
 
   created() {
     // Start:: Fire Methods
+    this.setTableRows();
     window.addEventListener("click", () => {
       this.filterFormIsActive = false;
     });
     if (this.$route.query.page) {
       this.paginations.current_page = +this.$route.query.page;
     }
-    this.setTableRows();
     // End:: Fire Methods
   },
 };

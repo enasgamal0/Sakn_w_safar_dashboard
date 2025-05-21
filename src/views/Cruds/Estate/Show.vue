@@ -16,7 +16,8 @@
       <form>
         <div class="row">
           <!-- Start:: Name Input -->
-          <base-input
+          <!-- Start:: Name Input -->
+           <base-input
             col="6"
             type="text"
             :placeholder="$t('PLACEHOLDERS.nameAr')"
@@ -30,76 +31,16 @@
             v-model.trim="data.name_en"
             disabled
           />
-          <!-- End:: Name Input -->
-
-          <base-input
-            col="6"
-            type="textarea"
-            :placeholder="$t('PLACEHOLDERS.descAr')"
-            v-model.trim="data.descAr"
-            disabled
-          />
-          <base-input
-            col="6"
-            type="textarea"
-            :placeholder="$t('PLACEHOLDERS.descEn')"
-            v-model.trim="data.descEn"
-            disabled
-          />
-
-          <!-- Start:: Number of Available Auctions -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.price')"
-            v-model.number="data.price"
-            min="1"
-            disabled
-          />
-          <!-- End:: Number of Available Auctions -->
 
           <!-- Start:: Number of Available Bids -->
-          <base-input
+           <base-input
             col="6"
             type="text"
-            :placeholder="$t('PLACEHOLDERS.estate_type')"
-            v-model.number="data.type"
-            min="1"
+            :placeholder="$t('PLACEHOLDERS.estate_use')"
+            v-model.trim="data.estate_use"
             disabled
           />
           <!-- End:: Number of Available Bids -->
-
-          <!-- Start:: Auction Order -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.price_after_discount')"
-            v-model.number="data.price_after_discount"
-            min="1"
-          />
-          <!-- End:: Auction Order -->
-
-          <!-- Start:: Price Input -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.number_of_available_bids')"
-            v-model.number="data.number_of_available_bids"
-            min="1"
-            disabled
-          />
-          <!-- End:: Price Input -->
-
-          <!-- Start:: Price After Discount Input -->
-          <base-input
-            col="6"
-            type="text"
-            :placeholder="$t('PLACEHOLDERS.package_duration')"
-            v-model.number="data.package_duration"
-            min="0"
-            disabled
-          />
-          <!-- End:: Price After Discount Input -->
 
           <!-- Start:: Deactivate Switch Input -->
           <div class="input_wrapper switch_wrapper my-5">
@@ -137,11 +78,24 @@ export default {
         descEn: null,
         price: null,
         type: null,
+        estate_use: null,
         price_after_discount: null,
         number_of_available_bids: null,
         package_duration: null,
         active: null,
       },
+      estateUses: [
+        {
+          id: 1,
+          name: this.$t("PLACEHOLDERS.commercial"),
+          value: "commercial",
+        },
+        {
+          id: 2,
+          name: this.$t("PLACEHOLDERS.residential"),
+          value: "residential",
+        },
+      ],
       statusOptions: [
         { id: 1, name: this.$t("STATUS.active"), value: 1 },
         { id: 0, name: this.$t("STATUS.notActive"), value: 0 },
@@ -154,18 +108,13 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `packages/${this.$route.params?.id}`,
+          url: `estate-types/${this.$route.params?.id}`,
         });
-        this.data.name_ar = res.data.data.Package.trans.name.ar;
-        this.data.name_en = res.data.data.Package.trans.name.en;
-        this.data.descAr = res.data.data.Package.trans.description.ar;
-        this.data.descEn = res.data.data.Package.trans.description.en;
-        this.data.price = res.data.data.Package.price;
-        this.data.type = res.data.data.Package.estate_type_id?.name;
-        this.data.price_after_discount = res.data.data.Package.price_after_discount;
-        this.data.number_of_available_bids = res.data.data.Package.ads_number;
-        this.data.package_duration = res.data.data.Package.duration;
-        this.data.active = +res.data.data.Package.is_active;
+        this.data.name_ar = res.data.data.EstateType.trans.name.ar;
+        this.data.name_en = res.data.data.EstateType.trans.name.en;
+        this.data.estate_use = res.data.data.EstateType.type;
+        
+        this.data.active = +res.data.data.EstateType.is_active;
       } catch (error) {
         this.loading = false;
         console.log(error?.response?.data?.message);

@@ -1279,6 +1279,7 @@
     "is_required": "Type",
     "estate_type": "Estate Type",
     "add_additional_field": "Create an Additional Field",
+  "subscribers": "Subscriptions",
     "states": "Areas",
     "manage_states": "Areas Management",
     "manage_cities": "Cities Management",

@@ -1280,6 +1280,15 @@
     "is_required": "الصفة",
     "estate_type": "نوع العقار",
     "add_additional_field": "إنشاء حقل إضافي جديد",
+    "estate_use": "الغرض من العقار",
+    "subscribers": "الاشتراكات",
+    "estate_types": "إدارة نوع العقار",
+    "commercial": "تجاري",
+    "residential": "سكني",
+    "add_type": "اضافة نوع",
+
+
+
     "states": "المناطق",
     "manage_states": "إدارة المناطق",
     "manage_cities": "إدارة المدن",
@@ -1847,7 +1856,7 @@
     "package_type": "نوع الباقة",
     "package_name": "اسم الباقة",
     "package_discount": "نسبة الخصم",
-    "package_duration": "مدة الباقة (بالشهور)",
+    "package_duration": "مدة الباقة (بالايام)",
     "package_count_order": "عدد الطلبات",
     "package_count_users": "عدد المشتركين",
     "number_of_available_bids": "عدد الإعلانات المتاحة",

@@ -256,6 +256,15 @@ import AllPackages from "../views/Cruds/Packages/ShowAll.vue";
 import CreatePackages from "../views/Cruds/Packages/Create.vue";
 import ShowPackages from "../views/Cruds/Packages/Show.vue";
 import EditPackages from "../views/Cruds/Packages/Edit.vue";
+import SubscribesPackages from "../views/Cruds/Packages/Subscribes.vue";
+// ============== End:: Packages Routes
+// ============== Start:: Packages Routes
+import EstateHome from "../views/Cruds/Estate/Home.vue";
+import AllEstate from "../views/Cruds/Estate/ShowAll.vue";
+import CreateEstate from "../views/Cruds/Estate/Create.vue";
+import ShowEstate from "../views/Cruds/Estate/Show.vue";
+import EditEstate from "../views/Cruds/Estate/Edit.vue";
+// import SubscribesPackages from "../views/Cruds/Packages/Subscribes.vue";
 // ============== End:: Packages Routes
 
 // ============== Start:: orders Routes
@@ -2184,9 +2193,82 @@ const routes = [
             },
           },
           {
+            path: "sub/:id",
+            name: "SubscribesPackages",
+            component: SubscribesPackages,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "packages edit",
+                subject: "packages",
+              },
+            },
+          },
+          {
             path: "show/:id",
             name: "Showpackages",
             component: ShowPackages,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "packages show",
+                subject: "packages",
+              },
+            },
+          },
+        ],
+      },
+      {
+        path: "/estate_types",
+        name: "EstateHome",
+        component: EstateHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllEstate",
+            component: AllEstate,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "packages index",
+                subject: "packages",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "CreateEstate",
+            component: CreateEstate,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "packages create",
+                subject: "packages",
+              },
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "EditEstate",
+            component: EditEstate,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "packages edit",
+                subject: "packages",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowEstate",
+            component: ShowEstate,
             props: true,
             meta: {
               middleware: [auth],
