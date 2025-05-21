@@ -215,20 +215,6 @@ export default {
       }
     },
     // End:: validate Form Inputs
-    async getAllareas() {
-      try {
-        let res = await this.$axios({
-          method: "GET",
-          url: "areas?page=0&limit=0&is_active=1",
-        });
-        // console.log("All Data ==>", res.data.data);
-        this.allAreas = res.data.data;
-      } catch (error) {
-        this.loading = false;
-        console.log(error.response.data.message);
-      }
-    },
-
     async getRoles() {
       try {
         let res = await this.$axios({
@@ -246,7 +232,7 @@ export default {
       const REQUEST_DATA = new FormData();
       // // Start:: Append Request Data
       if (this.data.role) {
-        REQUEST_DATA.append("role_id", this.data.role?.id);
+        REQUEST_DATA.append("roles[0]", this.data.role?.id);
       }
       REQUEST_DATA.append("name", this.data.name);
       if (this.data.image.file) {
@@ -256,7 +242,7 @@ export default {
       REQUEST_DATA.append("mobile", this.data.phone);
       REQUEST_DATA.append("password", this.data.password);
       REQUEST_DATA.append(
-        "password confirmation",
+        "password_confirmation",
         this.data.passwordConfirmation
       );
       REQUEST_DATA.append("is_active", +this.data.active);
@@ -265,7 +251,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `users`,
+          url: `admins`,
           data: REQUEST_DATA,
         });
         this.isWaitingRequest = false;
@@ -282,7 +268,6 @@ export default {
   async created() {
     // Start:: Fire Methods
     await this.getRoles();
-    await this.getAllareas();
     // End:: Fire Methods
     this.$nextTick(() => {
       this.data.phone = "";

@@ -179,7 +179,6 @@ export default {
   },
 
   methods: {
-
     addOption() {
       this.data.field.options.push({ ar: "", en: "" });
     },

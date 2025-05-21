@@ -129,25 +129,26 @@
           <td colspan="4" class="fadeIn">
             <div
               class="cards_wrapper p-4"
-              v-if="item.permissions?.length > 0"
+              v-if="Object.keys(item.permissions || {})?.length > 0"
             >
               <div
-                v-for="element in item.permissions"
-                :key="element.id"
                 class="content_wrapper"
+                v-for="[groupKey, groupValue] in Object.entries(
+                  item.permissions
+                )"
+                :key="groupKey"
               >
-                <p class="group_title">{{ element.name }}</p>
-
+                <p class="group_title">
+                  {{ groupValue.name?.[0] || groupKey }}
+                </p>
                 <div class="wrapper">
                   <div
                     class="item_data_card"
-                    v-for="permission in element.controls"
-                    :key="permission.id"
+                    v-for="permission in groupValue?.controls?.slice(1)"
+                    :key="permission?.id"
                   >
-                    <div class="card_title">
-                      <h5>
-                        {{ permission.name }}
-                      </h5>
+                    <div class="card_title text-center">
+                      <h5>{{ permission?.name }}</h5>
                     </div>
                   </div>
                 </div>
@@ -159,6 +160,7 @@
             </p>
           </td>
         </template>
+
         <!-- End:: Expanded Row -->
 
         <!-- Start:: Activation Status -->
@@ -543,7 +545,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `roles/${targetItem.id}/toggle-role`,
+          url: `roles/activate/${targetItem.id}`,
           data: REQUEST_DATA,
         });
         this.$message.success(this.$t("MESSAGES.changeActivation"));

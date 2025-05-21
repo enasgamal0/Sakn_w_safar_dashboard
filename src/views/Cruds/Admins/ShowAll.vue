@@ -21,7 +21,7 @@
             <div class="row justify-content-center align-items-center w-100">
               <!-- Start:: Name Input -->
               <base-input
-                col="3"
+                col="5"
                 type="text"
                 :placeholder="$t('PLACEHOLDERS.name')"
                 v-model.trim="filterOptions.name"
@@ -30,7 +30,7 @@
 
               <!-- Start:: Email Input -->
               <base-input
-                col="3"
+                col="5"
                 type="text"
                 :placeholder="$t('PLACEHOLDERS.email')"
                 v-model.trim="filterOptions.email"
@@ -39,7 +39,7 @@
 
               <!-- Start:: Phone Input -->
               <base-input
-                col="3"
+                col="5"
                 type="tel"
                 :placeholder="$t('TABLES.Clients.phone')"
                 v-model.trim="filterOptions.phone"
@@ -58,7 +58,7 @@
 
               <!-- Start:: Status Input -->
               <base-select-input
-                col="3"
+                col="5"
                 :optionsList="activeStatuses"
                 :placeholder="$t('PLACEHOLDERS.status')"
                 v-model="filterOptions.isActive"
@@ -557,7 +557,7 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "users",
+          url: "admins",
           params: {
             page: this.paginations.current_page,
             name: this.filterOptions.name,
@@ -596,8 +596,9 @@ export default {
       let targetItem = selectedItem;
       const REQUEST_DATA = new FormData();
       // Start:: Append Request Data
+      REQUEST_DATA.append("is_active", selectedItem?.is_active ? 0 : 1);
       if (this.deactivateReason) {
-        REQUEST_DATA.append("message", this.deactivateReason);
+        REQUEST_DATA.append("reason", this.deactivateReason);
       }
       // REQUEST_DATA.append("is_active", targetItem.is_active == 1 ? 0 : 1);
       // Start:: Append Request Data
@@ -606,7 +607,7 @@ export default {
       try {
         await this.$axios({
           method: "POST",
-          url: `users/${selectedItem.id}/toggle`,
+          url: `admins/activate/${selectedItem.id}`,
           data: REQUEST_DATA,
         });
         this.$message.success(this.$t("MESSAGES.changeActivation"));
@@ -615,7 +616,7 @@ export default {
         this.itemToChangeActivationStatus = null;
         this.deactivateReason = null;
       } catch (error) {
-        this.$message.error(error.response.data.message);
+        this.$message.error(error?.response?.data?.message);
       }
     },
     // ===== End:: Handling Activation & Deactivation
@@ -639,7 +640,7 @@ export default {
       try {
         await this.$axios({
           method: "DELETE",
-          url: `users/${this.itemToDelete.id}`,
+          url: `admins/${this.itemToDelete.id}`,
         });
         this.dialogDelete = false;
         this.tableRows = this.tableRows.filter((item) => {

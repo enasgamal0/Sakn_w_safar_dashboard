@@ -201,17 +201,17 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: `users/${this.id}`,
+          url: `admins/${this.id}`,
         });
 
-        this.data.image.path = res.data.data.user.image;
-        this.data.name = res.data.data.user.name;
-        this.data.email = res.data.data.user.email;
-        this.data.phone = res.data.data.user.mobile;
-        this.data.role = res.data.data.user.roles;
-        this.data.active = res.data.data.user.is_active;
-        this.data.numberOfVisits = res.data.data.user.login_number;
-        this.data.lastVisit = res.data.data.user.last_login;
+        this.data.image.path = res.data.data.Admin.avatar;
+        this.data.name = res.data.data.Admin.name;
+        this.data.email = res.data.data.Admin.email;
+        this.data.phone = res.data.data.Admin.mobile;
+        this.data.role = res.data.data.Admin.role_obj[0];
+        this.data.active = res.data.data.Admin.is_active;
+        this.data.numberOfVisits = res.data.data.Admin.login_numbers;
+        this.data.lastVisit = res.data.data.Admin.last_login_date;
       } catch (error) {
         console.log(error.response.data.message);
       }

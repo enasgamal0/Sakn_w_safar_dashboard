@@ -274,7 +274,15 @@
         v-if="$can('academic stages index', 'academic-stages')"
       >
         <router-link to="/academic-stages/all">
-          <span class="route_icon d-flex justify-center" style="background-color: rgba(59, 179, 227, 0.3); border-radius: 6px; width: 40px; height: 40px;">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(59, 179, 227, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
               src="@/assets/media/icons/ui_icons/stages.png"
               alt="icon"
@@ -297,7 +305,15 @@
         v-if="$can('academic years index', 'academic-years')"
       >
         <router-link to="/academic-years/all">
-          <span class="route_icon d-flex justify-center" style="background-color: rgba(242, 136, 48, 0.3); border-radius: 6px; width: 40px; height: 40px;">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(242, 136, 48, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
               src="@/assets/media/icons/ui_icons/academic_years.png"
               alt="icon"
@@ -320,14 +336,21 @@
         v-if="$can('specialization index', 'specialization')"
       >
         <router-link to="/specializations/all">
-          <span class="route_icon d-flex justify-center" style="background-color: rgba(127, 173, 57, 0.3); border-radius: 6px; width: 40px; height: 40px;">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(127, 173, 57, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
               src="@/assets/media/icons/ui_icons/badge.png"
               alt="icon"
               width="25"
               height="25"
               class="m-auto"
-
             />
           </span>
           <span class="route_text">
@@ -344,7 +367,15 @@
         v-if="$can('study subject index', 'study-subject')"
       >
         <router-link to="/subjects/all">
-          <span class="route_icon d-flex justify-center" style="background-color: rgba(114, 163, 153, 0.3); border-radius: 6px; width: 40px; height: 40px;">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(114, 163, 153, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
               src="@/assets/media/icons/ui_icons/books.png"
               alt="icon"
@@ -389,12 +420,21 @@
         v-if="$can('additional fields index', 'additional-fields')"
       >
         <router-link to="/additional-fields/all">
-          <span class="route_icon">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(109, 194, 249, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
-              src="@/assets/media/icons/ui_icons/folder.png"
+              src="@/assets/media/icons/ui_icons/plus.svg"
               alt="icon"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
+              class="m-auto"
             />
           </span>
           <span class="route_text">
@@ -556,7 +596,7 @@
       <!-- End:: reasons Route -->
 
       <!-- Start:: sideNavbarList_providers Route -->
-      <div class="side_routes_wrapper">
+      <!-- <div class="side_routes_wrapper">
         <a-menu
           style="width: 100%"
           mode="vertical"
@@ -594,7 +634,7 @@
             </template>
           </a-sub-menu>
         </a-menu>
-      </div>
+      </div> -->
       <!-- Start:: sideNavbarList_providers Route -->
 
       <!-- Start:: RequestWallets Route -->
@@ -671,7 +711,9 @@
           :open-keys="openKeys"
           @openChange="onOpenChange"
           v-if="
-          $can('states index', 'states') || $can('cities index', 'cities') || $can('districts index', 'districts')
+            $can('states index', 'states') ||
+            $can('cities index', 'cities') ||
+            $can('districts index', 'districts')
           "
         >
           <a-sub-menu
@@ -682,7 +724,23 @@
           >
             <template v-if="item.children">
               <span slot="title">
-                <img :src="item.icon" alt="icon" width="35" height="35" />
+                <span
+                  class="route_icon d-flex justify-center"
+                  style="
+                    background-color: rgba(94, 231, 189, 0.3);
+                    border-radius: 6px;
+                    width: 40px;
+                    height: 40px;
+                  "
+                >
+                  <img
+                    :src="item.icon"
+                    alt="icon"
+                    width="30"
+                    height="30"
+                    class="m-auto"
+                  />
+                </span>
                 <span> {{ item.title }} </span>
               </span>
 
@@ -838,12 +896,21 @@
         v-if="$can('packages index', 'packages')"
       >
         <router-link to="/packages/all">
-          <span class="route_icon">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(127, 211, 125, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
-              src="@/assets/media/icons/ui_icons/subscription.png"
+              src="@/assets/media/icons/ui_icons/package.svg"
               alt="icon"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
+              class="m-auto"
             />
           </span>
           <span class="route_text">
@@ -857,12 +924,21 @@
         v-if="true"
       >
         <router-link to="/estate_types/all">
-          <span class="route_icon">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(199, 185, 246, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
-              src="@/assets/media/icons/ui_icons/office_building.png"
+              src="@/assets/media/icons/ui_icons/building.svg"
               alt="icon"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
+              class="m-auto"
             />
           </span>
           <span class="route_text">
@@ -967,7 +1043,15 @@
         v-if="$can('sliders index', 'sliders')"
       >
         <router-link to="/Ads/all">
-          <span class="route_icon d-flex justify-center" style="background-color: rgba(212, 200, 72, 0.3); border-radius: 6px; width: 40px; height: 40px;">
+          <span
+            class="route_icon d-flex justify-center"
+            style="
+              background-color: rgba(212, 200, 72, 0.3);
+              border-radius: 6px;
+              width: 40px;
+              height: 40px;
+            "
+          >
             <img
               src="@/assets/media/icons/ui_icons/ads2.png"
               alt="icon"
@@ -1352,7 +1436,9 @@ export default {
           key: "dashboard",
           title: this.$t("SIDENAV.control_admins"),
           icon: require("@/assets/media/icons/ui_icons/panel.png"),
-          hasPermission: this.$can("roles index", "roles") || this.$can("users index", "users"),
+          hasPermission:
+            this.$can("roles index", "roles") ||
+            this.$can("users index", "users"),
           children: [
             {
               key: "roles",
@@ -1376,9 +1462,9 @@ export default {
         {
           key: "dashboard_places",
           title: this.$t("PLACEHOLDERS.places"),
-          icon: require("@/assets/media/icons/ui_icons/country.png"),
+          icon: require("@/assets/media/icons/ui_icons/location.svg"),
           hasPermission:
-          this.$can("states index", "states") ||
+            this.$can("states index", "states") ||
             this.$can("cities index", "cities") ||
             this.$can("districts index", "districts"),
           children: [
