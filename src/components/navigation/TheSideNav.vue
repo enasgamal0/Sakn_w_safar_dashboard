@@ -382,13 +382,13 @@
       </div>
       <!-- End:: Categories Route -->
 
-      <!-- Start:: main_sections Route -->
-      <!-- <div
+      <!-- Start:: additional_fields Route -->
+      <div
         class="home_route"
         @click="$emit('fireToggleNavDrawerEmit')"
-        v-if="$can('categories index', 'categories')"
+        v-if="$can('additional fields index', 'additional-fields')"
       >
-        <router-link to="/main-categories/all">
+        <router-link to="/additional-fields/all">
           <span class="route_icon">
             <img
               src="@/assets/media/icons/ui_icons/folder.png"
@@ -398,11 +398,11 @@
             />
           </span>
           <span class="route_text">
-            {{ $t("PLACEHOLDERS.main_section") }}
+            {{ $t("PLACEHOLDERS.additional_fields") }}
           </span>
         </router-link>
-      </div> -->
-      <!-- End:: main_sections Route -->
+      </div>
+      <!-- End:: main_sadditional_fieldsections Route -->
 
       <!-- Start:: sub_sections Route -->
       <!-- <div

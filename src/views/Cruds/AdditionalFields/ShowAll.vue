@@ -1,6 +1,6 @@
 <template>
   <div class="show_all_content_wrapper">
-    <!-- Start:: Main Section -->
+    <!-- Start:: additional fields -->
     <main>
       <!--  =========== Start:: Filter Form =========== -->
       <div
@@ -23,25 +23,19 @@
               <base-input
                 col="6"
                 type="text"
-                :placeholder="$t('PLACEHOLDERS.section_name')"
+                :placeholder="$t('PLACEHOLDERS.name')"
                 v-model.trim="filterOptions.name"
               />
               <!-- End:: Name Input -->
 
-              <!-- <base-select-input col="4" :optionsList="allMainCategories" :placeholder="$t('PLACEHOLDERS.main_section')"
-                v-model="filterOptions.main_section" required /> -->
-
-              <!-- <base-select-input col="4" :optionsList="allSubCategories" :placeholder="$t('PLACEHOLDERS.sub_section')"
-                v-model="data.sub_section" required /> -->
-
-              <!-- Start:: Status Input -->
+              <!-- Start:: estate_types Input -->
               <base-select-input
                 col="6"
-                :optionsList="activeStatuses"
-                :placeholder="$t('PLACEHOLDERS.status')"
-                v-model="filterOptions.status"
+                :optionsList="estate_types"
+                :placeholder="$t('PLACEHOLDERS.estate_type')"
+                v-model="filterOptions.estate_types"
               />
-              <!-- End:: Status Input -->
+              <!-- End:: estate_types Input -->
             </div>
 
             <div class="btns_wrapper">
@@ -61,11 +55,10 @@
         </div>
       </div>
       <!--  =========== End:: Filter Form =========== -->
-
       <!--  =========== Start:: Table Title =========== -->
       <div class="table_title_wrapper">
         <div class="title_text_wrapper">
-          <h5>{{ $t("PLACEHOLDERS.main_section") }}</h5>
+          <h5>{{ $t("PLACEHOLDERS.additional_fields") }}</h5>
           <button
             v-if="!filterFormIsActive"
             class="filter_toggler"
@@ -76,10 +69,10 @@
         </div>
         <div
           class="title_route_wrapper"
-          v-if="$can('category create', 'category')"
+          v-if="$can('additional fields create', 'additional-fields')"
         >
-          <router-link to="/categories/create">
-            {{ $t("PLACEHOLDERS.add_main_section") }}
+          <router-link to="/additional-fields/create">
+            {{ $t("PLACEHOLDERS.add_additional_field") }}
           </router-link>
         </div>
       </div>
@@ -119,7 +112,7 @@
             class="activation"
             dir="ltr"
             style="z-index: 1"
-            v-if="$can('category activate', 'category')"
+            v-if="$can('additional fields activate', 'additional-fields')"
           >
             <v-switch
               class="mt-2"
@@ -141,12 +134,34 @@
         </template>
         <!-- End:: Activation -->
 
+        <!-- Start:: is_required -->
+        <template v-slot:[`item.is_required`]="{ item }">
+          <div v-if="item.is_required">{{ $t("PLACEHOLDERS.required") }}</div>
+
+          <div v-else> {{ $t("PLACEHOLDERS.not_required") }}</div>
+        </template>
+        <!-- End:: is_required -->
+
+        <!-- Start:: estate_types -->
+        <template v-slot:[`item.estate_types`]="{ item }">
+          <div v-if="item.estate_types?.length > 1">
+            {{ item.estate_types?.map((type) => type.name).join(" & ") }}
+          </div>
+
+          <div v-if="item.estate_types?.length == 1">
+             {{ item.estate_types[0]?.name }}
+          </div>
+
+          <div v-if="item.estate_types?.length == 0">>-</div>
+        </template>
+        <!-- End:: estate_types -->
+
         <!-- Start:: Actions -->
         <template v-slot:[`item.actions`]="{ item }">
           <div class="actions">
             <a-tooltip
               placement="bottom"
-              v-if="$can('category show', 'category')"
+              v-if="$can('additional fields show', 'additional-fields')"
             >
               <template slot="title">
                 <span>{{ $t("BUTTONS.show") }}</span>
@@ -158,7 +173,7 @@
 
             <a-tooltip
               placement="bottom"
-              v-if="$can('category edit', 'category')"
+              v-if="$can('additional fields edit', 'additional-fields')"
             >
               <template slot="title">
                 <span>{{ $t("BUTTONS.edit") }}</span>
@@ -170,7 +185,7 @@
 
             <a-tooltip
               placement="bottom"
-              v-if="$can('category delete', 'category')"
+              v-if="$can('additional fields delete', 'additional-fields')"
             >
               <template slot="title">
                 <span>{{ $t("BUTTONS.delete") }}</span>
@@ -219,7 +234,7 @@
       </v-data-table>
       <!--  =========== End:: Data Table =========== -->
     </main>
-    <!-- End:: Main Section -->
+    <!-- End:: additional fields -->
 
     <!-- Start:: Pagination -->
     <template>
@@ -278,12 +293,13 @@ export default {
       isWaitingRequest: false,
       // End:: Loading Data
 
+      estate_types: [],
+
       // Start:: Filter Data
       filterFormIsActive: false,
       filterOptions: {
         name: null,
-        main_section: null,
-        status: null,
+        estate_types: null,
       },
       // End:: Filter Data
 
@@ -298,8 +314,20 @@ export default {
           sortable: false,
         },
         {
-          text: this.$t("PLACEHOLDERS.section_name"),
+          text: this.$t("PLACEHOLDERS.name"),
           value: "name",
+          sortable: false,
+          align: "center",
+        },
+        {
+          text: this.$t("PLACEHOLDERS.estate_type"),
+          value: "estate_types",
+          sortable: false,
+          align: "center",
+        },
+        {
+          text: this.$t("PLACEHOLDERS.is_required"),
+          value: "is_required",
           sortable: false,
           align: "center",
         },
@@ -309,12 +337,6 @@ export default {
           align: "center",
           sortable: false,
           width: "120",
-        },
-        {
-          text: this.$t("PLACEHOLDERS.created_at"),
-          value: "created_at",
-          sortable: false,
-          align: "center",
         },
         {
           text: this.$t("TABLES.Admins.actions"),
@@ -343,7 +365,7 @@ export default {
       permissions: null,
       // Start:: Page Permissions
 
-      allMainCategories: [],
+      allAdditionalFields: [],
     };
   },
 
@@ -361,7 +383,7 @@ export default {
     async submitFilterForm() {
       if (this.$route.query.page !== "1") {
         await this.$router.push({
-          path: "/categories/all",
+          path: "/additional-fields/all",
           query: { page: 1 },
         });
       }
@@ -369,10 +391,10 @@ export default {
     },
     async resetFilter() {
       this.filterOptions.name = null;
-      this.filterOptions.status = null;
+      this.filterOptions.estate_types = null;
       if (this.$route.query.page !== "1") {
         await this.$router.push({
-          path: "/categories/all",
+          path: "/additional-fields/all",
           query: { page: 1 },
         });
       }
@@ -398,15 +420,14 @@ export default {
       try {
         let res = await this.$axios({
           method: "GET",
-          url: "categories",
+          url: "additional-fields",
           params: {
             page: this.paginations.current_page,
             name: this.filterOptions.name,
-            is_active: this.filterOptions.status?.value,
+            estate_type: this.filterOptions.estate_types?.id,
           },
         });
         this.loading = false;
-        // console.log("All Data ==>", res.data.data);
         this.tableRows = res.data.data;
         this.paginations.last_page = res.data.meta.last_page;
         this.paginations.items_per_page = res.data.meta.per_page;
@@ -420,10 +441,10 @@ export default {
     // ==================== Start:: Crud ====================
     // ===== Start:: Edit
     editItem(item) {
-      this.$router.push({ path: `/categories/edit/${item.id}` });
+      this.$router.push({ path: `/additional-fields/edit/${item.id}` });
     },
     showItem(item) {
-      this.$router.push({ path: `/categories/show/${item.id}` });
+      this.$router.push({ path: `/additional-fields/show/${item.id}` });
     },
     // ===== End:: Edit
 
@@ -436,7 +457,7 @@ export default {
       try {
         await this.$axios({
           method: "DELETE",
-          url: `categories/${this.itemToDelete.id}`,
+          url: `additional-fields/${this.itemToDelete.id}`,
         });
         this.dialogDelete = false;
         this.setTableRows();
@@ -456,7 +477,7 @@ export default {
       try {
         let response = await this.$axios({
           method: "POST",
-          url: `categories/${item.id}/activate`,
+          url: `additional-fields/activate/${item.id}`,
         });
         this.setTableRows();
         this.$message.success(this.$t("MESSAGES.changedSuccessfully"));
@@ -465,6 +486,18 @@ export default {
       }
     },
     // End:: Change Activation Status
+
+    async getEstateTypes() {
+      try {
+        let res = await this.$axios({
+          method: "GET",
+          url: `estate-types?page=0&limit=0&status=1`,
+        });
+        this.estate_types = res.data.data;
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    },
   },
 
   created() {
@@ -475,6 +508,7 @@ export default {
     if (this.$route.query.page) {
       this.paginations.current_page = +this.$route.query.page;
     }
+    this.getEstateTypes();
     this.setTableRows();
     // End:: Fire Methods
   },

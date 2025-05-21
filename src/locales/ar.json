@@ -1262,6 +1262,24 @@
   },
 
   "PLACEHOLDERS": {
+    "show_additional_field": "عرض بيانات حقل إضافي",
+    "edit_additional_field": "تعديل بيانات حقل إضافي",
+    "options": "الاختيارات",
+    "option_num": "الاختيار رقم",
+    "option_name_ar": "بالعربية",
+    "option_name_en": "بالإنجليزية",
+    "field_type": "نوع الحقل",
+    "field_required": "الصفة",
+    "text": "حقل نصي",
+    "number": "حقل رقم",
+    "dropdown": "قائمة منسدلة",
+    "radio": "اختيار منفرد",
+    "imageOrIcon": "الصورة/الأيقونة",
+    "not_required": "اختياري",
+    "required": "إجباري",
+    "is_required": "الصفة",
+    "estate_type": "نوع العقار",
+    "add_additional_field": "إنشاء حقل إضافي جديد",
     "states": "المناطق",
     "manage_states": "إدارة المناطق",
     "manage_cities": "إدارة المدن",
@@ -1898,8 +1916,7 @@
     "update_main_services": "تعديل الخدمة",
     "additional_services": " الخدمات المصاحبة",
 
-    "additional_fields": "الحقول الإضافية",
-    "add_additional_fields": "إضافة حقل إضافي جديد",
+    "additional_fields": "إدارة الحقول الإضافية",
     "show_additional_fields": "عرض الحقل",
     "update_additional_fields": "تعديل الحقل",
     "additional_field": "الحقل الإضافي",
@@ -2358,6 +2375,7 @@
   },
 
   "VALIDATION": {
+    "at_least_two_options": "يجب إضافة اختيارين على الأقل",
     "media": "يجب اختيار صورة أو فيديو للإعلان",
     "publish_start_date": "تاريخ البدء مطلوب",
     "publish_end_date": "تاريخ الانتهاء مطلوب",

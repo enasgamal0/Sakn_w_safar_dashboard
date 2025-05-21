@@ -332,6 +332,14 @@ import ShowOrdersRequests from "../views/Cruds/OrdersRequests/Show.vue";
 // import ShowCategories from "../views/Cruds/MainCategories/Show.vue";
 // ============== End:: MainCategories Routes
 
+// ============== Start:: Additional Fields Routes
+import AdditionalFieldsHome from "../views/Cruds/AdditionalFields/Home.vue";
+import AllAdditionalFields from "../views/Cruds/AdditionalFields/ShowAll.vue";
+import CreateAdditionalFields from "../views/Cruds/AdditionalFields/Create.vue";
+import EditAdditionalFields from "../views/Cruds/AdditionalFields/Edit.vue";
+import ShowAdditionalFields from "../views/Cruds/AdditionalFields/Show.vue";
+// ============== End:: Additional Fields Routes
+
 // ============== Start:: Academic Stages Routes
 import AcademicStagesHome from "../views/Cruds/AcademicStages/Home.vue";
 import AllAcademicStages from "../views/Cruds/AcademicStages/ShowAll.vue";
@@ -2854,55 +2862,118 @@ const routes = [
       },
       // End:: Subjects Routes Config
 
-      // Start:: Categories Routes Config
+      // Start:: Additiona lFields Routes Config
       {
-        path: "/main-categories",
-        name: "CategoriesHome",
-        component: CategoriesHome,
+        path: "/additional-fields",
+        name: "AdditionalFieldsHome",
+        component: AdditionalFieldsHome,
         meta: {
           middleware: [auth],
         },
         children: [
           {
             path: "all",
-            name: "AllCategories",
-            component: AllCategories,
+            name: "AllAdditionalFields",
+            component: AllAdditionalFields,
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "categories index",
-                subject: "categories",
+                action: "additional fields index",
+                subject: "additional-fields",
               },
             },
           },
           {
             path: "create",
-            name: "CreateCategories",
-            component: CreateCategories,
+            name: "CreateAdditionalFields",
+            component: CreateAdditionalFields,
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "categories index",
-                subject: "categories",
+                action: "additional fields create",
+                subject: "additional-fields",
               },
             },
           },
           {
             path: "edit/:id",
-            name: "EditCategories",
-            component: EditCategories,
+            name: "EditAdditionalFields",
+            component: EditAdditionalFields,
             props: true,
             meta: {
               middleware: [auth],
               requiresPermission: {
-                action: "categories index",
-                subject: "categories",
+                action: "additional fields edit",
+                subject: "additional-fields",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowAdditionalFields",
+            component: ShowAdditionalFields,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "additional fields show",
+                subject: "additional-fields",
               },
             },
           },
         ],
       },
-      // End:: Categories Routes Config
+      // End:: Additional Fields Routes Config
+
+      // // Start:: Categories Routes Config
+      // {
+      //   path: "/main-categories",
+      //   name: "CategoriesHome",
+      //   component: CategoriesHome,
+      //   meta: {
+      //     middleware: [auth],
+      //   },
+      //   children: [
+      //     {
+      //       path: "all",
+      //       name: "AllCategories",
+      //       component: AllCategories,
+      //       meta: {
+      //         middleware: [auth],
+      //         requiresPermission: {
+      //           action: "categories index",
+      //           subject: "categories",
+      //         },
+      //       },
+      //     },
+      //     {
+      //       path: "create",
+      //       name: "CreateCategories",
+      //       component: CreateCategories,
+      //       meta: {
+      //         middleware: [auth],
+      //         requiresPermission: {
+      //           action: "categories index",
+      //           subject: "categories",
+      //         },
+      //       },
+      //     },
+      //     {
+      //       path: "edit/:id",
+      //       name: "EditCategories",
+      //       component: EditCategories,
+      //       props: true,
+      //       meta: {
+      //         middleware: [auth],
+      //         requiresPermission: {
+      //           action: "categories index",
+      //           subject: "categories",
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
+      // // End:: Categories Routes Config
 
       // Start:: app-rates Routes Config
       // {
