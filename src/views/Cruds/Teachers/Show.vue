@@ -62,7 +62,7 @@
             @dialCode="dialCode"
             @isoCode="isoCode"
             :placeholder="$t('PLACEHOLDERS.phone')"
-            :defaultCountry="data.iso_code"
+            :defaultCountry="data.iso_code || 'SA'"
             :key="key"
           />
           <base-input
