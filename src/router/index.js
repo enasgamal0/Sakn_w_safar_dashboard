@@ -19,7 +19,12 @@ import AllRoles from "../views/Cruds/Roles/ShowAll.vue";
 import EditRole from "../views/Cruds/Roles/Edit.vue";
 import CreateRole from "../views/Cruds/Roles/Create.vue";
 // ============== End:: Roles Routes
-
+// ================== Start:: Clients Routes
+import ClientsHome from "../views/Cruds/Clients/Home.vue";
+import AllClients from "../views/Cruds/Clients/ShowAll.vue";
+import CreateClients from "../views/Cruds/Clients/Create.vue";
+import ShowClients from "../views/Cruds/Clients/Show.vue";
+// ================= End:: Clients Routes
 // ============== Start:: Financial Reports Routes
 import FinancialReportsHome from "../views/Cruds/FinancialReports/Home.vue";
 import AllFinancialReports from "../views/Cruds/FinancialReports/ShowAll.vue";
@@ -521,7 +526,54 @@ const routes = [
         ],
       },
       // End:: Contact Messages Routes Config
-
+ {
+        path: "/Clients",
+        name: "ClientsHome",
+        component: ClientsHome,
+        meta: {
+          middleware: [auth],
+        },
+        children: [
+          {
+            path: "all",
+            name: "AllClients",
+            component: AllClients,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "users index",
+                subject: "users",
+              },
+            },
+          },
+          {
+            path: "show/:id",
+            name: "ShowClients",
+            component: ShowClients,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "users show",
+                subject: "users",
+              },
+            },
+          },
+          {
+            path: "create",
+            name: "CreateClients",
+            component: CreateClients,
+            props: true,
+            meta: {
+              middleware: [auth],
+              requiresPermission: {
+                action: "users show",
+                subject: "users",
+              },
+            },
+          },
+        ],
+      },
       // Start:: App Content Routes Config
       {
         path: "/app-content",

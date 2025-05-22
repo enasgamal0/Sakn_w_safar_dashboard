@@ -244,7 +244,25 @@
         </router-link>
       </div> -->
       <!-- End:: Customers Route -->
-
+      <div
+        class="home_route"
+        @click="$emit('fireToggleNavDrawerEmit')"
+        v-if="$can('users index', 'users')"
+      >
+        <router-link to="/Clients/all">
+          <span class="route_icon">
+            <img
+              src="@/assets/media/icons/ui_icons/users.svg"
+              alt="icon"
+              width="40"
+              height="40"
+            />
+          </span>
+          <span class="route_text">
+            {{ $t("SIDENAV.Clients.title") }}
+          </span>
+        </router-link>
+      </div>
       <!-- Start:: Students Route -->
       <div
         class="home_route"

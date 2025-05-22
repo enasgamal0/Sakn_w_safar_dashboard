@@ -1262,6 +1262,11 @@
   },
 
   "PLACEHOLDERS": {
+    "editWallet":"رصيد العميل من الاعلانات",
+    "walletAmount":"الرصيد الحالي للعميل من الاعلانات",
+
+    "sub_at":"تاريخ الإشتراك",
+    "add_client":"اضافة عميل",
     "show_additional_field": "عرض بيانات حقل إضافي",
     "edit_additional_field": "تعديل بيانات حقل إضافي",
     "options": "الاختيارات",

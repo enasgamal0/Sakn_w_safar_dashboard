@@ -1261,6 +1261,8 @@
   },
 
   "PLACEHOLDERS": {
+        "sub_at":"ٍSubscribe Date",
+    "add_client":"Add Client",
     "show_additional_field": "Show Additional Field Data",
     "edit_additional_field": "Edit Additional Field Data",
     "options": "Options",
